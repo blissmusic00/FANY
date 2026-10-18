@@ -30,8 +30,11 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-20 px-4">
-        <div class="max-w-5xl mx-auto text-center space-y-6">
+    <section class="relative bg-slate-900 text-white py-20 px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-25">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80" alt="공사 현장" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-5xl mx-auto text-center space-y-6 relative z-10">
             <div class="inline-block bg-yellow-400/20 text-yellow-400 font-bold px-4 py-1.5 rounded-full text-sm border border-yellow-400/30">
                 🏗️ 건설 현장 가설 안전시설물 전문 시공 사업부
             </div>
@@ -50,48 +53,6 @@
         </div>
     </section>
 
-    <!-- Services Overview -->
-    <section class="py-16 max-w-7xl mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-black">주요 <span class="text-yellow-500">시공 분야</span></h2>
-            <p class="text-gray-500 mt-2">산업안전보건법 및 건설기술 진흥법 기준을 철저히 준수합니다.</p>
-        </div>
-
-        <div class="grid md:grid-cols-4 gap-6">
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
-                <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2">낙하물 방지망 & 수평망</h3>
-                <p class="text-gray-500 text-xs leading-relaxed">고층 작업 시 낙하물 사고 예방을 위한 규격 망 설치 및 비계 구조 연계 시공</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2">가설 난간대 & 통로 펜스</h3>
-                <p class="text-gray-500 text-xs leading-relaxed">슬래브 단부, 개구부, 가설 통로 추락 방지용 고강도 난간 설치</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
-                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-person-digging"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2">작업발판 & 안전비계</h3>
-                <p class="text-gray-500 text-xs leading-relaxed">시스템 비계 및 작업발판 물량 산출, 안전 구조 검토 기반 정밀 시공</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
-                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-road-barrier"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2">현장 가설 방음벽/가림막</h3>
-                <p class="text-gray-500 text-xs leading-relaxed">도심지 현장 외부 가설 휀스 및 비산먼지 차단용 방음벽 시공</p>
-            </div>
-        </div>
-    </section>
-
     <!-- Portfolio / Cases -->
     <section class="py-16 bg-slate-100">
         <div class="max-w-7xl mx-auto px-4">
@@ -103,14 +64,10 @@
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Case 1 -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-200 flex flex-col">
-                    <div class="bg-slate-800 p-6 text-white flex justify-between items-center">
-                        <div>
-                            <span class="text-xs bg-yellow-400 text-slate-900 font-bold px-2.5 py-1 rounded">공공 환경시설</span>
-                            <h3 class="text-xl font-bold mt-2">남양주 화도 공공하수처리시설</h3>
-                        </div>
-                        <i class="fa-solid fa-water text-3xl text-slate-600"></i>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80" alt="남양주 화도" class="w-full h-48 object-cover">
                     <div class="p-6 space-y-3 flex-grow text-sm text-gray-600">
+                        <span class="text-xs bg-yellow-400 text-slate-900 font-bold px-2.5 py-1 rounded">공공 환경시설</span>
+                        <h3 class="text-xl font-bold text-slate-900">남양주 화도 공공하수처리시설</h3>
                         <p><strong>시공 내용:</strong> 하수처리장 내부 가설 통로 난간대 설치 및 추락 방지망 시공, 현장 안전관리 협력</p>
                         <p><strong>특징:</strong> 수처리 시설 구조물 특성에 맞춘 특수 앵커링 및 부식 방지용 안전시설 적용</p>
                     </div>
@@ -118,14 +75,10 @@
 
                 <!-- Case 2 -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-200 flex flex-col">
-                    <div class="bg-slate-800 p-6 text-white flex justify-between items-center">
-                        <div>
-                            <span class="text-xs bg-blue-400 text-slate-900 font-bold px-2.5 py-1 rounded">산업 플랜트</span>
-                            <h3 class="text-xl font-bold mt-2">STEP-1 PJT 건설 현장</h3>
-                        </div>
-                        <i class="fa-solid fa-industry text-3xl text-slate-600"></i>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" alt="STEP-1 PJT" class="w-full h-48 object-cover">
                     <div class="p-6 space-y-3 flex-grow text-sm text-gray-600">
+                        <span class="text-xs bg-blue-400 text-slate-900 font-bold px-2.5 py-1 rounded">산업 플랜트</span>
+                        <h3 class="text-xl font-bold text-slate-900">STEP-1 PJT 건설 현장</h3>
                         <p><strong>시공 내용:</strong> 산업 설비 라인 가설 안전시설물 물량 산출, 안전비계 및 방지조치 시설 설치</p>
                         <p><strong>특징:</strong> 정밀 물량 산출을 통해 공기 단축 및 정산 증빙 서류 가이드 연계</p>
                     </div>
@@ -133,14 +86,10 @@
 
                 <!-- Case 3 -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-200 flex flex-col">
-                    <div class="bg-slate-800 p-6 text-white flex justify-between items-center">
-                        <div>
-                            <span class="text-xs bg-green-400 text-slate-900 font-bold px-2.5 py-1 rounded">도심 빌딩</span>
-                            <h3 class="text-xl font-bold mt-2">신한금융투자 타워 리모델링</h3>
-                        </div>
-                        <i class="fa-solid fa-building text-3xl text-slate-600"></i>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="신한금융투자 타워" class="w-full h-48 object-cover">
                     <div class="p-6 space-y-3 flex-grow text-sm text-gray-600">
+                        <span class="text-xs bg-green-400 text-slate-900 font-bold px-2.5 py-1 rounded">도심 빌딩</span>
+                        <h3 class="text-xl font-bold text-slate-900">신한금융투자 타워 리모델링</h3>
                         <p><strong>시공 내용:</strong> 도심 오피스 빌딩 내외부 리모델링에 따른 낙하물 방지망 및 개구부 난간대 보강</p>
                         <p><strong>특징:</strong> 보행자 안전 확보를 위한 이동식 가설 가림막 및 시인성 우수한 안내 시설 설치</p>
                     </div>
@@ -148,14 +97,10 @@
 
                 <!-- Case 4 -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-200 flex flex-col">
-                    <div class="bg-slate-800 p-6 text-white flex justify-between items-center">
-                        <div>
-                            <span class="text-xs bg-orange-400 text-slate-900 font-bold px-2.5 py-1 rounded">주거 재개발</span>
-                            <h3 class="text-xl font-bold mt-2">부천 재개발·재건축 건설현장</h3>
-                        </div>
-                        <i class="fa-solid fa-city text-3xl text-slate-600"></i>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=800&q=80" alt="부천 재개발" class="w-full h-48 object-cover">
                     <div class="p-6 space-y-3 flex-grow text-sm text-gray-600">
+                        <span class="text-xs bg-orange-400 text-slate-900 font-bold px-2.5 py-1 rounded">주거 재개발</span>
+                        <h3 class="text-xl font-bold text-slate-900">부천 재개발·재건축 건설현장</h3>
                         <p><strong>시공 내용:</strong> 아파트 신축 및 재건축 구역 외부 EGI 휀스, 통로 안전펜스 설치 및 수량 검측</p>
                         <p><strong>특징:</strong> 현장 여건에 맞춘 맞춤형 자재 수급 및 안전보건관리비 정산 연계 지원</p>
                     </div>
@@ -188,27 +133,6 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold text-gray-700 mb-1">필요 공종 (중복 선택 가능)</label>
-                    <div class="grid grid-cols-2 gap-2 pt-1">
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" checked class="rounded text-yellow-500">
-                            <span>낙하물방지망</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="rounded text-yellow-500">
-                            <span>가설 난간대/펜스</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="rounded text-yellow-500">
-                            <span>작업발판/비계</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="rounded text-yellow-500">
-                            <span>외부 방음벽/휀스</span>
-                        </label>
-                    </div>
-                </div>
-                <div>
                     <label class="block font-bold text-gray-700 mb-1">문의 내용 / 도면 사항</label>
                     <textarea rows="3" placeholder="현장 규모 및 착공 예정일, 수량 등을 남겨주시면 정밀 견적을 전달드립니다." class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"></textarea>
                 </div>
@@ -228,15 +152,11 @@
     </footer>
 
     <script>
-        function openInquiryModal() {
-            document.getElementById('inquiry-modal').classList.remove('hidden');
-        }
-        function closeInquiryModal() {
-            document.getElementById('inquiry-modal').classList.add('hidden');
-        }
+        function openInquiryModal() { document.getElementById('inquiry-modal').classList.remove('hidden'); }
+        function closeInquiryModal() { document.getElementById('inquiry-modal').classList.add('hidden'); }
         function submitInquiry(e) {
             e.preventDefault();
-            alert('🎉 견적 및 시공 문의가 성공적으로 접수되었습니다!\n담당 엔지니어가 도면 확인 후 입력하신 연락처로 안내드립니다.');
+            alert('🎉 견적 및 시공 문의가 성공적으로 접수되었습니다!');
             closeInquiryModal();
         }
     </script>

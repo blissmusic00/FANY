@@ -168,13 +168,13 @@
     <!-- Shopping Logic -->
     <script>
         const products = [
-            { id: 1, name: "국내산 고급 반코팅 장갑 (10켤레)", category: "glove", price: 2690, tag: "대량소모품", desc: "착용감이 뛰어난 현장 필수 장갑", icon: "fa-hands-holding", iconColor: "text-amber-600" },
-            { id: 2, name: "3M NBR 폼 코팅 장갑 Super Grip 200", category: "glove", price: 1990, tag: "인기제품", desc: "정밀 작업용 3M 정품 장갑", icon: "fa-hand-dots", iconColor: "text-blue-600" },
-            { id: 3, name: "3M 1급 방진 마스크 (8822) 20개입", category: "glove", price: 13490, tag: "보호구", desc: "분진 차단 쿨링 배기밸브 적용 마스크", icon: "fa-head-side-mask", iconColor: "text-cyan-600" },
-            { id: 4, name: "KCs 인증 전체형 안전그네 (이중줄)", category: "kcs", price: 45000, tag: "KCs 인증", desc: "고소 작업용 추락 방지 안전그네", icon: "fa-vest-patches", iconColor: "text-yellow-500" },
-            { id: 5, name: "안전모 (경량 ABS 타입 / 턱끈 포함)", category: "kcs", price: 8500, tag: "KCs 인증", desc: "내충격성 정품 안전모", icon: "fa-hard-hat", iconColor: "text-orange-500" },
-            { id: 6, name: "고반사 PVC 안전 칼라콘 (70cm)", category: "traffic", price: 4200, tag: "현장용품", desc: "야간 시인성 우수 반사지 부착 칼라콘", icon: "fa-triangle-exclamation", iconColor: "text-red-500" },
-            { id: 7, name: "LED 충전식 신호봉 (경고등)", category: "traffic", price: 6500, tag: "현장용품", desc: "현장 교통 정리용 LED 신호봉", icon: "fa-lightbulb", iconColor: "text-amber-400" }
+            { id: 1, name: "국내산 고급 반코팅 장갑 (10켤레)", category: "glove", price: 2690, tag: "대량소모품", desc: "착용감이 뛰어난 현장 필수 장갑", img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=500&q=80" },
+            { id: 2, name: "3M NBR 폼 코팅 장갑 Super Grip 200", category: "glove", price: 1990, tag: "인기제품", desc: "정밀 작업용 3M 정품 장갑", img: "https://images.unsplash.com/photo-1603792907191-80543b24fb3b?auto=format&fit=crop&w=500&q=80" },
+            { id: 3, name: "3M 1급 방진 마스크 (8822) 20개입", category: "glove", price: 13490, tag: "보호구", desc: "분진 차단 쿨링 배기밸브 적용 마스크", img: "https://images.unsplash.com/photo-1584634731339-252c581abfc5?auto=format&fit=crop&w=500&q=80" },
+            { id: 4, name: "KCs 인증 전체형 안전그네 (이중줄)", category: "kcs", price: 45000, tag: "KCs 인증", desc: "고소 작업용 추락 방지 안전그네", img: "https://images.unsplash.com/photo-1618090584126-129cd1f3fbae?auto=format&fit=crop&w=500&q=80" },
+            { id: 5, name: "안전모 (경량 ABS 타입 / 턱끈 포함)", category: "kcs", price: 8500, tag: "KCs 인증", desc: "내충격성 정품 안전모", img: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=500&q=80" },
+            { id: 6, name: "고반사 PVC 안전 칼라콘 (70cm)", category: "traffic", price: 4200, tag: "현장용품", desc: "야간 시인성 우수 반사지 부착 칼라콘", img: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=500&q=80" },
+            { id: 7, name: "LED 충전식 신호봉 (경고등)", category: "traffic", price: 6500, tag: "현장용품", desc: "현장 교통 정리용 LED 신호봉", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=500&q=80" }
         ];
 
         let cart = [];
@@ -183,8 +183,8 @@
             const container = document.getElementById('product-list');
             container.innerHTML = items.map(p => `
                 <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition flex flex-col">
-                    <div class="bg-slate-100 h-40 flex items-center justify-center">
-                        <i class="fa-solid ${p.icon} text-5xl ${p.iconColor}"></i>
+                    <div class="h-44 bg-gray-100 overflow-hidden">
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition duration-300">
                     </div>
                     <div class="p-5 flex flex-col flex-grow">
                         <span class="text-xs bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded w-fit mb-2">${p.tag}</span>
