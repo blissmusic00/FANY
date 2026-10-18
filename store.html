@@ -17,8 +17,8 @@
                     <i class="fa-solid fa-hard-hat text-yellow-400 text-2xl"></i>
                     <span class="text-xl font-black text-white">FANY <span class="text-xs text-yellow-400 font-bold">SAFETY</span></span>
                 </a>
-                <span class="text-slate-600">|</span>
-                <span class="text-lg font-bold text-yellow-400 flex items-center gap-2">
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-lg font-bold text-yellow-400 hidden sm:flex items-center gap-2">
                     <i class="fa-solid fa-store"></i> FANY 안전몰
                 </span>
             </div>
@@ -36,25 +36,49 @@
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow">
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
         
-        <!-- Filter Tabs -->
-        <div class="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b">
-            <div>
-                <h1 class="text-2xl font-black text-slate-900">건설 현장 안전용품 발주 카탈로그</h1>
-                <p class="text-xs text-gray-500 mt-1">발주 시 KCs 인증서 및 KS 시험성적서가 자동 발급되는 표준 품목입니다.</p>
-            </div>
-            <div class="flex flex-wrap gap-2" id="category-buttons">
-                <button onclick="filterCategory('all')" class="cat-btn bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold shadow">전체보기</button>
-                <button onclick="filterCategory('glove')" class="cat-btn bg-white text-slate-700 hover:bg-gray-100 border px-4 py-2 rounded-xl text-sm font-bold">장갑 / 마스크</button>
-                <button onclick="filterCategory('kcs')" class="cat-btn bg-white text-slate-700 hover:bg-gray-100 border px-4 py-2 rounded-xl text-sm font-bold">KCs 보호구</button>
-                <button onclick="filterCategory('traffic')" class="cat-btn bg-white text-slate-700 hover:bg-gray-100 border px-4 py-2 rounded-xl text-sm font-bold">도로 / 현장용품</button>
-            </div>
+        <!-- Page Title -->
+        <div class="mb-8 pb-4 border-b">
+            <h1 class="text-2xl md:text-3xl font-black text-slate-900">건설 현장 안전용품 발주 카탈로그</h1>
+            <p class="text-xs text-gray-500 mt-1">발주 시 KCs 인증서 및 KS 시험성적서가 자동 발급되는 표준 품목입니다.</p>
         </div>
 
-        <!-- Product Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list">
-            <!-- Products rendered via JS -->
+        <!-- Layout: Left Sidebar & Right Products -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            <!-- Left Sidebar Categories -->
+            <aside class="lg:col-span-1 space-y-3">
+                <h2 class="text-sm font-black text-slate-500 uppercase tracking-wider px-1">
+                    <i class="fa-solid fa-list mr-1 text-yellow-500"></i> 상품 카테고리
+                </h2>
+                <div class="flex flex-col space-y-2" id="category-buttons">
+                    <button onclick="filterCategory('all', event)" class="cat-btn text-left bg-slate-900 text-white px-4 py-3 rounded-xl text-sm font-bold shadow flex items-center justify-between transition">
+                        <span>전체보기</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                    <button onclick="filterCategory('glove', event)" class="cat-btn text-left bg-white text-slate-700 hover:bg-gray-100 border px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-between transition">
+                        <span>장갑 / 마스크</span>
+                        <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
+                    </button>
+                    <button onclick="filterCategory('kcs', event)" class="cat-btn text-left bg-white text-slate-700 hover:bg-gray-100 border px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-between transition">
+                        <span>KCs 보호구</span>
+                        <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
+                    </button>
+                    <button onclick="filterCategory('traffic', event)" class="cat-btn text-left bg-white text-slate-700 hover:bg-gray-100 border px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-between transition">
+                        <span>도로 / 현장용품</span>
+                        <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Right Product Grid -->
+            <div class="lg:col-span-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6" id="product-list">
+                    <!-- Products rendered via JS -->
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -156,16 +180,16 @@
             const container = document.getElementById('product-list');
             container.innerHTML = items.map(p => `
                 <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition flex flex-col">
-                    <div class="bg-slate-100 h-44 flex items-center justify-center">
-                        <i class="fa-solid ${p.icon} text-6xl ${p.iconColor}"></i>
+                    <div class="bg-slate-100 h-40 flex items-center justify-center">
+                        <i class="fa-solid ${p.icon} text-5xl ${p.iconColor}"></i>
                     </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <span class="text-xs bg-slate-100 text-slate-700 font-bold px-2.5 py-1 rounded w-fit mb-2">${p.tag}</span>
-                        <h3 class="text-lg font-bold text-slate-900">${p.name}</h3>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <span class="text-xs bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded w-fit mb-2">${p.tag}</span>
+                        <h3 class="text-base font-bold text-slate-900">${p.name}</h3>
                         <p class="text-gray-500 text-xs mt-1 flex-grow">${p.desc}</p>
-                        <div class="mt-4 pt-4 border-t flex justify-between items-center">
-                            <span class="text-slate-900 font-black text-lg">${p.price.toLocaleString()}원</span>
-                            <button onclick="addToCart(${p.id})" class="bg-slate-900 hover:bg-yellow-400 hover:text-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
+                        <div class="mt-4 pt-3 border-t flex justify-between items-center">
+                            <span class="text-slate-900 font-black text-base">${p.price.toLocaleString()}원</span>
+                            <button onclick="addToCart(${p.id})" class="bg-slate-900 hover:bg-yellow-400 hover:text-slate-900 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition">
                                 <i class="fa-solid fa-plus mr-1"></i> 담기
                             </button>
                         </div>
@@ -174,13 +198,13 @@
             `).join('');
         }
 
-        function filterCategory(cat) {
+        function filterCategory(cat, event) {
             document.querySelectorAll('.cat-btn').forEach(btn => {
                 btn.classList.remove('bg-slate-900', 'text-white', 'shadow');
                 btn.classList.add('bg-white', 'text-slate-700');
             });
-            event.target.classList.remove('bg-white', 'text-slate-700');
-            event.target.classList.add('bg-slate-900', 'text-white', 'shadow');
+            event.currentTarget.classList.remove('bg-white', 'text-slate-700');
+            event.currentTarget.classList.add('bg-slate-900', 'text-white', 'shadow');
 
             if (cat === 'all') renderProducts(products);
             else renderProducts(products.filter(p => p.category === cat));
@@ -221,15 +245,15 @@
                 itemsEl.innerHTML = `<p class="text-center text-gray-400 py-12">장바구니가 비어 있습니다.</p>`;
             } else {
                 itemsEl.innerHTML = cart.map(item => `
-                    <div class="flex items-center justify-between bg-gray-50 p-3.5 rounded-xl border">
+                    <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border">
                         <div>
-                            <p class="font-bold text-sm text-slate-900">${item.name}</p>
+                            <p class="font-bold text-xs text-slate-900">${item.name}</p>
                             <p class="text-xs text-gray-500">${item.price.toLocaleString()}원</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button onclick="updateQty(${item.id}, -1)" class="w-7 h-7 bg-white border rounded font-bold text-gray-600 hover:bg-gray-100">-</button>
-                            <span class="font-bold text-sm px-1">${item.qty}</span>
-                            <button onclick="updateQty(${item.id}, 1)" class="w-7 h-7 bg-white border rounded font-bold text-gray-600 hover:bg-gray-100">+</button>
+                            <button onclick="updateQty(${item.id}, -1)" class="w-6 h-6 bg-white border rounded font-bold text-gray-600 hover:bg-gray-100">-</button>
+                            <span class="font-bold text-xs px-1">${item.qty}</span>
+                            <button onclick="updateQty(${item.id}, 1)" class="w-6 h-6 bg-white border rounded font-bold text-gray-600 hover:bg-gray-100">+</button>
                         </div>
                     </div>
                 `).join('');
