@@ -3,342 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FANY 안전몰 - 발주 및 처리/배송 상태 추적</title>
+    <title>FANY - 안전시설물 공사 & 시공 견적 게시판</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
     <!-- Header -->
-    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-40">
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-6">
-                <a href="index.html" class="flex items-center space-x-2">
-                    <i class="fa-solid fa-hard-hat text-yellow-400 text-2xl"></i>
-                    <span class="text-xl font-black text-white">FANY <span class="text-xs text-yellow-400 font-bold">SAFETY</span></span>
-                </a>
-                <span class="text-slate-600 hidden sm:inline">|</span>
-                <span class="text-lg font-bold text-yellow-400 hidden sm:flex items-center gap-2">
-                    <i class="fa-solid fa-store"></i> FANY 안전몰
-                </span>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button onclick="openOrderTracker()" class="text-yellow-400 hover:underline text-xs md:text-sm font-bold flex items-center gap-1">
-                    <i class="fa-solid fa-truck-ramp-box"></i> 발주/배송 조회
-                </button>
-                <button onclick="toggleCart()" class="relative bg-slate-800 hover:bg-slate-700 text-yellow-400 px-4 py-2 rounded-lg border border-slate-700 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="font-bold text-sm hidden sm:inline">장바구니</span>
-                    <span id="cart-count" class="bg-yellow-400 text-slate-900 font-black text-xs px-2 py-0.5 rounded-full">0</span>
+            <a href="index.html" class="flex items-center space-x-3">
+                <i class="fa-solid fa-hard-hat text-yellow-400 text-3xl"></i>
+                <span class="text-2xl font-black tracking-wider text-white">FANY <span class="text-xs bg-yellow-400 text-black px-2 py-1 rounded font-bold">SAFETY</span></span>
+            </a>
+            <nav class="hidden md:flex space-x-8 font-semibold text-sm">
+                <a href="index.html" class="hover:text-yellow-400 transition">플랫폼 소개</a>
+                <a href="construction.html" class="text-yellow-400 font-bold border-b-2 border-yellow-400 pb-1">안전시설물 공사</a>
+                <a href="store.html" class="hover:text-yellow-400 transition">FANY 안전몰</a>
+            </nav>
+            <div class="flex items-center space-x-3">
+                <button onclick="openInquiryModal()" class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-black px-5 py-2.5 rounded-lg shadow transition text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> 견적 문의 등록
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
-        
-        <!-- Page Title & Order Tracker Quick Bar -->
-        <div class="mb-8 p-6 bg-slate-900 text-white rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-                <h1 class="text-2xl font-black">건설 현장 안전용품 B2B 발주 센터</h1>
-                <p class="text-xs text-gray-300 mt-1">발주 시 [접수 ➔ KCs 인증서 패키징 ➔ 현장 배송완료] 상태를 실시간 확인하실 수 있습니다.</p>
-            </div>
-            <button onclick="openOrderTracker()" class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-black px-5 py-2.5 rounded-xl shadow transition text-xs flex items-center gap-2">
-                <i class="fa-solid fa-magnifying-glass"></i> 내 현장 발주/배송 현황 조회
-            </button>
+    <!-- Hero Section -->
+    <section class="relative bg-slate-900 text-white py-16 px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-25">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80" alt="공사 현장" class="w-full h-full object-cover">
         </div>
-
-        <!-- Layout: Left Sidebar & Right Products -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            
-            <!-- Left Sidebar Categories -->
-            <aside class="lg:col-span-1 space-y-3">
-                <h2 class="text-sm font-black text-slate-500 uppercase tracking-wider px-1">
-                    <i class="fa-solid fa-list mr-1 text-yellow-500"></i> 상품 카테고리
-                </h2>
-                <div class="flex flex-col space-y-2" id="category-buttons">
-                    <button onclick="filterCategory('all', event)" class="cat-btn text-left bg-slate-900 text-white px-4 py-3 rounded-xl text-sm font-bold shadow flex items-center justify-between transition">
-                        <span>전체보기</span>
-                        <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </button>
-                    <button onclick="filterCategory('glove', event)" class="cat-btn text-left bg-white text-slate-700 hover:bg-gray-100 border px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-between transition">
-                        <span>장갑 / 마스크</span>
-                        <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
-                    </button>
-                    <button onclick="filterCategory('kcs', event)" class="cat-btn text-left bg-white text-slate-700 hover:bg-gray-100 border px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-between transition">
-                        <span>KCs 보호구</span>
-                        <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
-                    </button>
-                    <button onclick="filterCategory('traffic', event)" class="cat-btn text-left bg-white text-slate-700 hover:bg-gray-100 border px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-between transition">
-                        <span>도로 / 현장용품</span>
-                        <i class="fa-solid fa-chevron-right text-xs text-gray-300"></i>
-                    </button>
-                </div>
-            </aside>
-
-            <!-- Right Product Grid -->
-            <div class="lg:col-span-3">
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6" id="product-list">
-                    <!-- Products rendered via JS -->
-                </div>
+        <div class="max-w-5xl mx-auto text-center space-y-4 relative z-10">
+            <div class="inline-block bg-yellow-400/20 text-yellow-400 font-bold px-4 py-1.5 rounded-full text-xs border border-yellow-400/30">
+                🏗️ 건설 현장 가설 안전시설물 전문 엔지니어링
             </div>
-
-        </div>
-    </main>
-
-    <!-- Cart Drawer -->
-    <div id="cart-drawer" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity">
-        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
-            <div class="p-6 bg-slate-900 text-white flex justify-between items-center">
-                <h3 class="text-xl font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-cart-flatbed text-yellow-400"></i> 현장 발주 장바구니
-                </h3>
-                <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
-            </div>
-            
-            <div class="p-6 flex-grow overflow-y-auto space-y-4" id="cart-items">
-                <p class="text-center text-gray-400 py-12">장바구니가 비어 있습니다.</p>
-            </div>
-
-            <div class="p-6 bg-gray-50 border-t space-y-4">
-                <div class="flex justify-between items-center text-lg font-black">
-                    <span>총 예상 단가 합계:</span>
-                    <span id="cart-total-price" class="text-yellow-600">0원</span>
-                </div>
-                <button onclick="openOrderModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-black py-4 rounded-xl shadow text-center transition">
-                    발주 접수하기
+            <h1 class="text-3xl md:text-5xl font-black leading-tight">
+                실시간 현장 <span class="text-yellow-400">공사 견적 문의 & 시공 게시판</span>
+            </h1>
+            <p class="text-gray-300 text-sm md:text-base max-w-3xl mx-auto font-light">
+                낙하물방지망, 난간대, 작업발판, EGI 휀스 등 도면 기반 정밀 물량 산출 및 맞춤 시공을 제공합니다.
+            </p>
+            <div class="pt-2">
+                <button onclick="openInquiryModal()" class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 text-base font-black px-6 py-3 rounded-xl shadow-lg transition inline-flex items-center gap-2">
+                    <i class="fa-solid fa-file-circle-plus"></i> 신규 공사 견적 등록하기
                 </button>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Order Submission Modal -->
-    <div id="order-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+    <!-- Real-time Inquiry Board Section -->
+    <section class="py-12 max-w-7xl mx-auto px-4 w-full">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 space-y-6">
+            
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 gap-4">
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-yellow-500"></i> 실시간 공사 견적 누적 현황
+                    </h2>
+                    <p class="text-xs text-gray-500 mt-1">접수된 견적 문의는 담당 엔지니어 검토 후 순차적으로 안내됩니다.</p>
+                </div>
+                <div class="flex items-center gap-2 text-xs font-bold">
+                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1.5 rounded-full">검토중 <b id="stat-pending">3</b>건</span>
+                    <span class="bg-green-100 text-green-800 px-3 py-1.5 rounded-full">시공확정 <b id="stat-done">12</b>건</span>
+                </div>
+            </div>
+
+            <!-- Board Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs md:text-sm">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-700 uppercase font-bold border-b border-gray-200">
+                            <th class="py-3.5 px-4 text-center">번호</th>
+                            <th class="py-3.5 px-4">현장명 / 위치</th>
+                            <th class="py-3.5 px-4">요청 공종</th>
+                            <th class="py-3.5 px-4 text-center">담당자</th>
+                            <th class="py-3.5 px-4 text-center">등록일</th>
+                            <th class="py-3.5 px-4 text-center">진행 상태</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inquiry-board-list" class="divide-y divide-gray-100">
+                        <!-- Rendered via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Major Cases Section -->
+    <section class="py-12 bg-slate-100 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-black text-slate-900">FANY 대표 <span class="text-yellow-600">시공 성공 사례</span></h2>
+                <p class="text-gray-500 text-xs mt-1">대형 공공시설 및 프라임 빌딩 안전 인프라 시공 실적</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 flex flex-col md:flex-row">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=500&q=80" alt="남양주 화도" class="w-full md:w-2/5 h-40 md:h-auto object-cover">
+                    <div class="p-5 space-y-2 flex-grow text-xs text-gray-600">
+                        <span class="text-xs bg-yellow-400 text-slate-900 font-bold px-2 py-0.5 rounded">공공 환경시설</span>
+                        <h3 class="text-base font-bold text-slate-900">남양주 화도 공공하수처리시설</h3>
+                        <p>하수처리장 내부 가설 통로 난간대 및 추락 방지망 시공, 현장 안전관리 협력</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 flex flex-col md:flex-row">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80" alt="STEP-1 PJT" class="w-full md:w-2/5 h-40 md:h-auto object-cover">
+                    <div class="p-5 space-y-2 flex-grow text-xs text-gray-600">
+                        <span class="text-xs bg-blue-400 text-slate-900 font-bold px-2 py-0.5 rounded">산업 플랜트</span>
+                        <h3 class="text-base font-bold text-slate-900">STEP-1 PJT 건설 현장</h3>
+                        <p>산업 설비 라인 가설 안전시설물 물량 산출, 안전비계 및 방지조치 시설 설치</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inquiry Modal -->
+    <div id="inquiry-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-8 shadow-2xl space-y-6">
             <div class="flex justify-between items-center border-b pb-4">
-                <h3 class="text-xl font-bold text-slate-900">📑 현장 발주서 작성</h3>
-                <button onclick="closeOrderModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                <h3 class="text-xl font-bold text-slate-900">📐 공사 견적 등록 (게시판 게시)</h3>
+                <button onclick="closeInquiryModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
             </div>
             
-            <form onsubmit="submitOrder(event)" class="space-y-4 text-sm">
+            <form onsubmit="submitInquiryBoard(event)" class="space-y-4 text-sm">
                 <div>
-                    <label class="block font-bold text-gray-700 mb-1">현장명 및 회사명</label>
-                    <input type="text" id="ord-site" required placeholder="예: [남양주 화도] 공공하수처리 현장" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <label class="block font-bold text-gray-700 mb-1">현장명 및 위치</label>
+                    <input type="text" id="inq-site" required placeholder="예: [서울 강남] 오피스 타워 리모델링" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">담당자 성함</label>
-                        <input type="text" id="ord-name" required placeholder="홍길동 소장" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none">
+                        <input type="text" id="inq-name" required placeholder="홍길동 소장" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none">
                     </div>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">연락처</label>
-                        <input type="tel" id="ord-phone" required placeholder="010-0000-0000" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none">
+                        <input type="tel" id="inq-phone" required placeholder="010-0000-0000" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none">
                     </div>
                 </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">요청 공종</label>
+                    <select id="inq-category" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none">
+                        <option value="낙하물방지망 / 수평망">낙하물방지망 / 수평망</option>
+                        <option value="가설 난간대 / 안전펜스">가설 난간대 / 안전펜스</option>
+                        <option value="작업발판 / 안전비계">작업발판 / 안전비계</option>
+                        <option value="외부 가설 방음벽 / EGI 휀스">외부 가설 방음벽 / EGI 휀스</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">요청 상세 내용</label>
+                    <textarea id="inq-content" rows="3" placeholder="현장 평수, 비계 높이, 도면 검토 요청 사항 등을 남겨주세요." class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"></textarea>
+                </div>
                 <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl shadow transition mt-4">
-                    발주 완료 및 발주번호 생성
+                    견적 문의 게시판에 등록하기
                 </button>
             </form>
-        </div>
-    </div>
-
-    <!-- Order Tracker Modal (Status Dashboard) -->
-    <div id="tracker-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-3xl w-full p-8 shadow-2xl space-y-6 max-h-[85vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b pb-4">
-                <div>
-                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-boxes-packing text-yellow-500"></i> 현장 발주 & 배송 상태 대시보드
-                    </h3>
-                    <p class="text-xs text-gray-500 mt-1">접수 ➔ KCs 서류 처리 ➔ 배송 완료 상태를 한눈에 확인하세요.</p>
-                </div>
-                <button onclick="closeOrderTracker()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
-            </div>
-
-            <!-- Tracker List -->
-            <div id="tracker-list" class="space-y-4">
-                <!-- Rendered via JS -->
-            </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-gray-400 py-8 border-t border-slate-800 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="font-bold text-white text-lg mb-2">FANY Construction Safety Logistics Platform</p>
+            <p class="font-bold text-white text-lg mb-2">FANY Construction Safety Engineering Platform</p>
             <p class="text-sm">Copyright © 2026 FANY. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Shopping & Tracking Logic -->
+    <!-- Board Logic Script -->
     <script>
-        const products = [
-            { id: 1, name: "국내산 고급 반코팅 장갑 (10켤레)", category: "glove", price: 2690, tag: "대량소모품", desc: "착용감이 뛰어난 현장 필수 장갑", img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=500&q=80" },
-            { id: 2, name: "3M NBR 폼 코팅 장갑 Super Grip 200", category: "glove", price: 1990, tag: "인기제품", desc: "정밀 작업용 3M 정품 장갑", img: "https://images.unsplash.com/photo-1603792907191-80543b24fb3b?auto=format&fit=crop&w=500&q=80" },
-            { id: 3, name: "3M 1급 방진 마스크 (8822) 20개입", category: "glove", price: 13490, tag: "보호구", desc: "분진 차단 쿨링 배기밸브 적용 마스크", img: "https://images.unsplash.com/photo-1584634731339-252c581abfc5?auto=format&fit=crop&w=500&q=80" },
-            { id: 4, name: "KCs 인증 전체형 안전그네 (이중줄)", category: "kcs", price: 45000, tag: "KCs 인증", desc: "고소 작업용 추락 방지 안전그네", img: "https://images.unsplash.com/photo-1618090584126-129cd1f3fbae?auto=format&fit=crop&w=500&q=80" },
-            { id: 5, name: "안전모 (경량 ABS 타입 / 턱끈 포함)", category: "kcs", price: 8500, tag: "KCs 인증", desc: "내충격성 정품 안전모", img: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=500&q=80" }
+        let boardData = [
+            { id: 104, site: "[남양주] 하수처리장 구조물 보강", category: "가설 난간대 / 안전펜스", name: "김*철 소장", date: "2026-10-18", status: "검토중", statusBg: "bg-yellow-100 text-yellow-800" },
+            { id: 103, site: "[서울 여의도] 금융센터 리모델링 현장", category: "낙하물방지망 / 수평망", name: "박*훈 차장", date: "2026-10-17", status: "견적완료", statusBg: "bg-blue-100 text-blue-800" },
+            { id: 102, site: "[경기 부천] 공동주택 재개발 구역", category: "외부 가설 방음벽 / EGI 휀스", name: "이*성 부장", date: "2026-10-15", status: "시공확정", statusBg: "bg-green-100 text-green-800" },
+            { id: 101, site: "[충북 청주] 플랜트 라인 증설 PJT", category: "작업발판 / 안전비계", name: "최*영 이사", date: "2026-10-12", status: "시공확정", statusBg: "bg-green-100 text-green-800" }
         ];
 
-        let cart = [];
-        let orderHistory = [
-            {
-                orderId: "FN-20261018-01",
-                site: "[남양주 화도] 하수처리장 현장",
-                name: "홍길동 소장",
-                items: "KCs 안전모 외 2건",
-                total: "142,000원",
-                status: "배송완료",
-                step: 3,
-                date: "2026-10-18"
-            },
-            {
-                orderId: "FN-20261017-04",
-                site: "[서울 여의도] 리모델링 현장",
-                name: "김철수 안전팀장",
-                items: "3M 방진 마스크 5박스",
-                total: "67,450원",
-                status: "서류발급/처리중",
-                step: 2,
-                date: "2026-10-17"
-            },
-            {
-                orderId: "FN-20261017-02",
-                site: "[부천] 공동주택 재개발 현장",
-                name: "이영희 소장",
-                items: "KCs 안전그네 10세트",
-                total: "450,000원",
-                status: "발주접수",
-                step: 1,
-                date: "2026-10-17"
-            }
-        ];
-
-        function renderProducts(items) {
-            const container = document.getElementById('product-list');
-            container.innerHTML = items.map(p => `
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 hover:shadow-xl transition flex flex-col">
-                    <div class="h-44 bg-gray-100 overflow-hidden">
-                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5 flex flex-col flex-grow">
-                        <span class="text-xs bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded w-fit mb-2">${p.tag}</span>
-                        <h3 class="text-base font-bold text-slate-900">${p.name}</h3>
-                        <p class="text-gray-500 text-xs mt-1 flex-grow">${p.desc}</p>
-                        <div class="mt-4 pt-3 border-t flex justify-between items-center">
-                            <span class="text-slate-900 font-black text-base">${p.price.toLocaleString()}원</span>
-                            <button onclick="addToCart(${p.id})" class="bg-slate-900 hover:bg-yellow-400 hover:text-slate-900 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition">
-                                <i class="fa-solid fa-plus mr-1"></i> 담기
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        function renderBoard() {
+            const listEl = document.getElementById('inquiry-board-list');
+            listEl.innerHTML = boardData.map(item => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="py-3.5 px-4 text-center font-bold text-gray-500">#${item.id}</td>
+                    <td class="py-3.5 px-4 font-bold text-slate-900">${item.site}</td>
+                    <td class="py-3.5 px-4 text-gray-600">${item.category}</td>
+                    <td class="py-3.5 px-4 text-center text-gray-600">${item.name}</td>
+                    <td class="py-3.5 px-4 text-center text-gray-400 text-xs">${item.date}</td>
+                    <td class="py-3.5 px-4 text-center">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-full ${item.statusBg}">${item.status}</span>
+                    </td>
+                </tr>
             `).join('');
         }
 
-        function addToCart(id) {
-            const item = products.find(p => p.id === id);
-            const exist = cart.find(c => c.id === id);
-            if (exist) exist.qty += 1;
-            else cart.push({ ...item, qty: 1 });
-            updateCartUI();
-        }
+        function openInquiryModal() { document.getElementById('inquiry-modal').classList.remove('hidden'); }
+        function closeInquiryModal() { document.getElementById('inquiry-modal').classList.add('hidden'); }
 
-        function updateCartUI() {
-            const countEl = document.getElementById('cart-count');
-            const itemsEl = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total-price');
-
-            const totalQty = cart.reduce((s, i) => s + i.qty, 0);
-            const totalPrice = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-
-            countEl.textContent = totalQty;
-            totalEl.textContent = totalPrice.toLocaleString() + '원';
-
-            if (cart.length === 0) {
-                itemsEl.innerHTML = `<p class="text-center text-gray-400 py-12">장바구니가 비어 있습니다.</p>`;
-            } else {
-                itemsEl.innerHTML = cart.map(i => `
-                    <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border text-xs">
-                        <div>
-                            <p class="font-bold text-slate-900">${i.name}</p>
-                            <p class="text-gray-500">${i.price.toLocaleString()}원</p>
-                        </div>
-                        <span class="font-bold bg-white px-2 py-1 rounded border">${i.qty}개</span>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function toggleCart() { document.getElementById('cart-drawer').classList.toggle('hidden'); }
-        function openOrderModal() { document.getElementById('order-modal').classList.remove('hidden'); }
-        function closeOrderModal() { document.getElementById('order-modal').classList.add('hidden'); }
-
-        function submitOrder(e) {
+        function submitInquiryBoard(e) {
             e.preventDefault();
-            const site = document.getElementById('ord-site').value;
-            const name = document.getElementById('ord-name').value;
-            const total = cart.reduce((s, i) => s + (i.price * i.qty), 0).toLocaleString() + '원';
-            const itemsSummary = cart.length > 1 ? `${cart[0].name} 외 ${cart.length - 1}건` : cart[0].name;
+            const site = document.getElementById('inq-site').value;
+            const nameInput = document.getElementById('inq-name').value;
+            const category = document.getElementById('inq-category').value;
 
-            const orderNum = "FN-" + new Date().toISOString().replace(/[-T:]/g, "").slice(0, 8) + "-" + Math.floor(10 + Math.random() * 90);
+            // Name masking for privacy
+            const maskedName = nameInput.length > 2 ? nameInput[0] + "*" + nameInput[nameInput.length - 1] : nameInput[0] + "*";
+            const today = new Date().toISOString().split('T')[0];
+            const newId = boardData.length > 0 ? boardData[0].id + 1 : 101;
 
-            orderHistory.unshift({
-                orderId: orderNum,
+            boardData.unshift({
+                id: newId,
                 site: site,
-                name: name,
-                items: itemsSummary,
-                total: total,
-                status: "발주접수",
-                step: 1,
-                date: new Date().toISOString().split('T')[0]
+                category: category,
+                name: maskedName,
+                date: today,
+                status: "검토중",
+                statusBg: "bg-yellow-100 text-yellow-800"
             });
 
-            alert(`🎉 발주가 완료되었습니다!\n발주 번호: [ ${orderNum} ]\n상태 대시보드에서 실시간 배송 및 KCs 서류 현황을 조회하실 수 있습니다.`);
-            cart = [];
-            updateCartUI();
-            closeOrderModal();
-            toggleCart();
-            openOrderTracker();
+            renderBoard();
+            alert('🎉 견적 문의가 성공적으로 게시판에 누적 등록되었습니다!\n담당 엔지니어가 확인 후 연락을 드립니다.');
+            closeInquiryModal();
+            
+            document.getElementById('inq-site').value = '';
+            document.getElementById('inq-name').value = '';
+            document.getElementById('inq-phone').value = '';
+            document.getElementById('inq-content').value = '';
         }
 
-        function openOrderTracker() {
-            renderTracker();
-            document.getElementById('tracker-modal').classList.remove('hidden');
-        }
-        function closeOrderTracker() { document.getElementById('tracker-modal').classList.add('hidden'); }
-
-        function renderTracker() {
-            const listEl = document.getElementById('tracker-list');
-            listEl.innerHTML = orderHistory.map(ord => `
-                <div class="bg-gray-50 rounded-xl p-5 border border-gray-200 space-y-3">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b pb-3">
-                        <div>
-                            <span class="text-xs text-yellow-600 font-bold">${ord.orderId}</span>
-                            <h4 class="font-bold text-slate-900 text-sm">${ord.site} (${ord.name})</h4>
-                        </div>
-                        <span class="text-xs font-black px-3 py-1 rounded-full ${ord.step === 3 ? 'bg-green-100 text-green-800' : ord.step === 2 ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'}">
-                            ${ord.status}
-                        </span>
-                    </div>
-
-                    <!-- Step Bar -->
-                    <div class="grid grid-cols-3 text-center text-xs gap-2 pt-1">
-                        <div class="p-2 rounded ${ord.step >= 1 ? 'bg-slate-900 text-white font-bold' : 'bg-gray-200 text-gray-400'}">1. 발주접수</div>
-                        <div class="p-2 rounded ${ord.step >= 2 ? 'bg-slate-900 text-white font-bold' : 'bg-gray-200 text-gray-400'}">2. KCs 서류발급</div>
-                        <div class="p-2 rounded ${ord.step >= 3 ? 'bg-slate-900 text-white font-bold' : 'bg-gray-200 text-gray-400'}">3. 현장 배송완료</div>
-                    </div>
-
-                    <div class="flex justify-between items-center text-xs text-gray-500 pt-2">
-                        <span>품목: ${ord.items} (${ord.total})</span>
-                        <span class="text-slate-700 font-bold cursor-pointer hover:underline" onclick="alert('KCs 인증서 패키지 PDF가 발급되었습니다.')">📄 KCs 인증서 다운로드</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        renderProducts(products);
+        renderBoard();
     </script>
 </body>
 </html>
